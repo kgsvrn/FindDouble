@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
 
 namespace FindDoubleArray
 {
@@ -10,35 +14,44 @@ namespace FindDoubleArray
 
             int elementsCount = int.Parse(Console.ReadLine());
 
-            int[] myArray = new int[elementsCount];
+            Random rnd = new Random();
 
-            for (int i = 0; i < myArray.Length; i++)
+            var nums = Enumerable.Range(1, elementsCount).ToList();
+
+            int[] result = new int[elementsCount + 1];
+
+            Random rand = new Random();
+
+            for (int i = 0; i < elementsCount; i++)
             {
-                Console.WriteLine($"Введите элемент массива под индексом {i} :\t");
-                myArray[i] = int.Parse(Console.ReadLine());
+                int pos = rand.Next(0,nums.Count);
+                result[i] = nums[pos];
+                nums.RemoveAt(pos);
+            }
+            int randpos = rnd.Next(elementsCount);
+            for (int i = elementsCount-1; i >= randpos; i--)
+            {
+                result[i + 1] = result[i];
             }
 
+            result[randpos] = rnd.Next(1,elementsCount);
 
-
-            Console.WriteLine("Вывод массива:");
-
-            for (int i = 0; i < myArray.Length; i++)
+            foreach (var i in result)
             {
-                Console.WriteLine(myArray[i]);
+                Console.Write(" " + i);
             }
+            
 
-
-            for (int i = 0; i < myArray.Length; i++)
+            for (int i = 0; i < result.Length; i++)
             {
                 for (int j = 0; j < i; j++)
                 {
-                    if (myArray[i] == myArray[j])
+                    if (result[i] == result[j])
                     {
-                        Console.WriteLine($"Совпадает {myArray[i]} \t");
+                        Console.WriteLine($" Совпадает {result[i]} ");
                     }
                 }
             }
-
             Console.ReadLine();
 
         }
